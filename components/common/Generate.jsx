@@ -4,11 +4,14 @@ import { createBlog } from "../../services/blogService";
 import PropTypes from "prop-types";
 function Generate({ refreshBlogs }) {
   const [topic, setTopic] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
 
   const generateBlog = async () => {
     if (!topic) return;
+    setLoading(true);
     await createBlog({ topic });
     setTopic("");
+    setLoading(false);
     refreshBlogs();
   };
 
@@ -35,11 +38,20 @@ function Generate({ refreshBlogs }) {
              hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-300
              disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed transition-all
              flex items-center justify-center gap-2"
-          disabled={!topic}
+          disabled={!topic || loading}
           onClick={generateBlog}
         >
-          <AutoAwesomeIcon fontSize="small" />
-          Generate Blog Post
+          {loading ? (
+            <span className="flex items-center gap-2">
+              <span className="w-4 h-4 border-2 border-purple-500 border-t-transparent rounded-full animate-spin"></span>
+              Generating...
+            </span>
+          ) : (
+            <>
+              <AutoAwesomeIcon fontSize="small" />
+              Generate Blog Post
+            </>
+          )}
         </button>
       </div>
     </div>

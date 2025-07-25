@@ -7,7 +7,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import Icon from "@mui/material/Icon";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { deleteBlog } from "../../services/blogService";
 
 function DeleteButton({
@@ -31,12 +31,13 @@ function DeleteButton({
 
   const handleClose = () => setOpen(false);
 
-    const handleConfirm = async () => {
+  const handleConfirm = async () => {
     // Call the delete service
     await deleteBlog(blogId);
     setOpen(false);
-    // Reroute to the list page
-    navigate('/');
+    // Reroute to the list page and reload
+    navigate("/");
+    window.location.reload();
   };
 
   return (
@@ -95,7 +96,10 @@ function DeleteButton({
             Cancel
           </Button>
           <Button
-            onClick={handleConfirm}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleConfirm();
+            }}
             variant="contained"
             color="error"
             sx={{ textTransform: "none" }}
