@@ -6,6 +6,9 @@ This is the frontend of the AI Blog Post Generator application. It allows users 
 
 Hosted on [Vercel](https://ai-blog-post-two.vercel.app/)
 
+
+To Run locally, update VITE_API_BASE_URL=http://localhost:3001/api in .env file
+
 ## 🛠️ Tech Stack
 
 - React
