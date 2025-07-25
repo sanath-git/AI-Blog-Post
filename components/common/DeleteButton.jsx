@@ -64,7 +64,12 @@ function DeleteButton({
       )}
       <Dialog
         open={open}
-        onClose={handleClose}
+        onClose={(event, reason) => {
+          if (reason === "backdropClick" || reason === "escapeKeyDown") {
+            handleClose();
+          }
+        }}
+        onClick={(e) => e.stopPropagation()}
         maxWidth="xs"
         fullWidth
         PaperProps={{
